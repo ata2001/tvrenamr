@@ -6,8 +6,6 @@ import functools
 import logging
 import sys
 
-import click
-
 from tvrenamr import errors
 from tvrenamr.cli.helpers import (build_file_list, get_config, start_dry_run,
                                   stop_dry_run)
@@ -16,32 +14,6 @@ from tvrenamr.main import File, TvRenamr
 
 log = logging.getLogger('CLI')
 
-
-@click.command()
-@click.option('--config', type=click.Path(), help='Select a location for your config file. If the path is invalid the default locations will be used.')  # noqa
-@click.option('-c', '--canonical', help='Set the show\'s canonical name to use when performing the online lookup.')   # noqa
-@click.option('--debug', is_flag=True)
-@click.option('-d', '--dry-run', is_flag=True, help='Dry run your renaming.')
-@click.option('-e', '--episode', type=int, help='Set the episode number. Currently this will cause errors when working with more than one file.')  # noqa
-@click.option('--ignore-filelist', type=tuple, default=())
-@click.option('--log-file', type=click.Path(exists=True), help='Set the log file location.')
-@click.option('-l', '--log-level', help='Set the log level. Options: short, minimal, info and debug.')   # noqa
-@click.option('--log-file', type=click.Path(exists=True), help='Set the log file location.')
-@click.option('-n', '--name', help="Set the episode's name.")
-@click.option('--no-cache', is_flag=True, help='Force all renames to ignore the cache.')
-@click.option('-o', '--output-format', help='Set the output format for the episodes being renamed.')
-@click.option('--organise/--no-organise', default=True, help='Organise renamed files into folders based on their show name and season number. Can be explicitly disabled.')   # noqa
-@click.option('-p', '--partial', is_flag=True, help='Allow partial regex matching of the filename.')
-@click.option('-q', '--quiet', is_flag=True, help="Don't output logs to the command line")
-@click.option('-r', '--recursive', is_flag=True, help='Recursively lookup files in a given directory')   # noqa
-@click.option('--rename-dir', type=click.Path(), help='The directory to move renamed files to, if not specified the working directory is used.')   # noqa
-@click.option('--regex', help='The regular expression to use when extracting information from files.')   # noqa
-@click.option('-s', '--season', help='Set the season number.')
-@click.option('--show', help="Set the show's name (will search for this name).")
-@click.option('--show-override', help="Override the show's name (only replaces the show's name in the final file)")   # noqa
-@click.option('--specials', help='Set the show\'s specials folder (defaults to "Season 0")')
-@click.option('-t', '--the', is_flag=True, help="Set the position of 'The' in a show's name to the end of the show name")   # noqa
-@click.argument('paths', nargs=-1, required=False, type=click.Path(exists=True))
 def rename(config, canonical, debug, dry_run, episode,  # pylint: disable-msg=too-many-arguments
            ignore_filelist, log_file, log_level, name,  # pylint: disable-msg=too-many-arguments
            no_cache, output_format, organise, partial,  # pylint: disable-msg=too-many-arguments
