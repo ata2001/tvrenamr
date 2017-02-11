@@ -4,9 +4,10 @@ from __future__ import absolute_import
 
 import functools
 import logging
+import os
 import sys
 
-from tvrenamr import errors
+from tvrenamr import __version__, errors
 from tvrenamr.cli.helpers import (build_file_list, get_config, start_dry_run,
                                   stop_dry_run)
 from tvrenamr.logs import start_logging
@@ -27,6 +28,9 @@ def rename(config, canonical, debug, dry_run, episode,  # pylint: disable-msg=to
 
     if dry_run or debug:
         start_dry_run(logger)
+
+    if not paths:
+        paths = [os.curdir]
 
     for current_dir, filename in build_file_list(paths, recursive, ignore_filelist):
         try:
@@ -57,6 +61,9 @@ def rename(config, canonical, debug, dry_run, episode,  # pylint: disable-msg=to
                     canonical=canonical,
                     override=name,
                 )
+
+                # TODO: make this a sanitisation method on ep?
+                ep.title = ep.title.replace('/', '-')
 
             show = conf.get_output(_file.show_name, override=show_override)
             the = conf.get('the', show=_file.show_name, override=the)
