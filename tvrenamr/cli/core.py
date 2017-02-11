@@ -29,9 +29,6 @@ def rename(config, canonical, debug, dry_run, episode,  # pylint: disable-msg=to
     if dry_run or debug:
         start_dry_run(logger)
 
-    if not paths:
-        paths = [os.curdir]
-
     for current_dir, filename in build_file_list(paths, recursive, ignore_filelist):
         try:
             tv = TvRenamr(current_dir, debug, dry_run, no_cache)
