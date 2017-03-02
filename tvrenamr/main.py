@@ -259,8 +259,8 @@ class TvRenamr(object):
                 elif os.name == 'nt':
                     import ctypes
                     kernel_dll = ctypes.windll.LoadLibrary("kernel32.dll")
-                    kernel_dll.CreateSymbolicLinkA(source_filepath,
-                                                   destination_filepath, 0)
+                    kernel_dll.CreateSymbolicLinkW(destination_filepath,
+                                                   source_filepath, 0)
             else:
                 shutil.move(source_filepath, destination_filepath)
         destination_file = os.path.split(destination_filepath)[1]
